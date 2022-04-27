@@ -2,11 +2,11 @@ clear all; %close all;
 load('exp_data.mat')
 
 t_0 = 1e-12; 
-chi_0 = 0.17;
+chi_0 = 0.25;
 
 % elastic properties
 nu = 0.381; 
-G_298 = 1e3; 
+G_298 = 2.83e3; 
 
 %% STEADY STATE 
 % calculation at two strain rates, T = const
@@ -25,7 +25,7 @@ sig_T = (sig_1 - sig_2)/A;
 % calculation at multiple T
 q = t_0*3e-5;
 T_p=1.05*398*(-log(q)-1/(2*chi_0));% if 1.05-->1, 398K-->0
-T_p=12500;
+T_p=18500;
 T_all = [198 248 273 298 348 398]; 
 sig_ss = [1.9 0.99 0.71 0.6 0.49 0.37];
 sig_T = zeros(size(sig_ss)); 
@@ -47,13 +47,13 @@ hold on
 espan = [0 0.01]; 
 e = linspace(0,0.01,1000);
 
-c0 = 35; 
-c1 = 500; 
+c0 = 200; 
+c1 = 1; 
 Kx = c0*exp(T_all/c1);
-K_pf = 5;
+K_pf = 3;
 % K_p = 1e5; 
 rho_ini = 1e-3; 
-chi_ini = 0.155; 
+chi_ini = 0.15; 
 y0 = [0.0 rho_ini chi_ini];
 j=1;
 legend_list={'198K','248K','273K','298K','348K','398K'};
@@ -68,10 +68,10 @@ for ii=1:6
     s = deval(sol,e,j);
     % error(4)=mean((deval(sol,e4,1)-sig4).^2);
 
-    scatter(e_exp,s_exp,color(ii),'DisplayName',legend_list{ii});
-    plot(e*100,s,color(ii),'DisplayName',legend_list{ii});
+    scatter(e_exp,s_exp,color(ii));
+    plot(e*100,s,color(ii));
 % xlabel('e(%)') 
 % ylabel('Stress, MPa') 
 end
-legend
+% legend
 title('Different Temperature')
