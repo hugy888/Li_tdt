@@ -1,6 +1,6 @@
 function out=globe421(e,sig)
     dict=[1,100,5];
-    gs = GlobalSearch;
+    gs = GlobalSearch('PlotFcns',{@gsplotbestf});
     rng default % For reproducibility
 %     opts=optimoptions('fmincon', 'MaxFunctionEvaluations',2);
     sevenmin = @(dict)obj429(dict,e,sig);
