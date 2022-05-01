@@ -1,11 +1,12 @@
 clear all; %close all; 
 load('exp_data.mat')
+
 t_0 = 1e-12; 
-chi_0 = 0.17;
+chi_0 = 0.25;
 
 % elastic properties
 nu = 0.381; 
-G_298 = 1e3; 
+G_298 = 2.83e+3; 
 
 %% STEADY STATE 
 % calculation at two strain rates, T = const
@@ -23,7 +24,7 @@ rho_ss = exp(-1/chi_0);
 % T_p = T*exp(sig_1/sig_T)*log(sqrt(rho_ss)/q_1);
 % calculation at multiple T
 q = t_0*3e-5;
-T_p=1.05*398*(-log(q)-1/(2*chi_0));
+% T_p=1.05*398*(-log(q)-1/(2*chi_0));
 T_p=15000;
 T_all = [248 273 298 348 398]; 
 sig_ss = [0.99 0.71 0.6 0.49 0.37];
@@ -36,6 +37,8 @@ end
 
 % ratio between Taylor stress and shear modulus 
 r_param = mu_T(3)/G_298; 
+
+
 clear A ii q q_1 q_2 sig_1 sig_2 sig_ss T 
 
 %% calculation for T=298 and edot=3e-5
@@ -50,12 +53,12 @@ espan = [0 0.25];
 e = linspace(0,0.25,1000);
 
 c0 = 1; 
-c1 = 500; 
+c1 = 50; 
 Kx = c0*exp(T_all/c1);
-K_pf = 1;
+K_pf = 5;
 % K_p = 1e5; 
 rho_ini = 1e-3; 
-chi_ini = 0.167; 
+chi_ini = 0.22; 
 y0 = [0.0 rho_ini chi_ini];
 j=1;
 legend_list={'4e-5','3e-4','3e-3','2e-2'};
@@ -70,10 +73,10 @@ for ii=1:4
     s = deval(sol,e,j);
     % error(4)=mean((deval(sol,e4,1)-sig4).^2);
 
-    scatter(e_exp,s_exp,color(ii),'DisplayName',legend_list{ii});
-    plot(e*100,s,color(ii),'DisplayName',legend_list{ii});
+    scatter(e_exp,s_exp,color(ii));
+    plot(e*100,s,color(ii));
 % xlabel('e(%)') 
 % ylabel('Stress, MPa') 
 end
-legend
+
 title('Different Strain Rate')

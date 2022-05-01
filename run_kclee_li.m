@@ -27,7 +27,7 @@ q = t_0*3e-5;
 T_p=1.05*398*(-log(q)-1/(2*chi_0));% if 1.05-->1, 398K-->0
 T_p=18500;
 T_all = [198 248 273 298 348 398]; 
-sig_ss = [1.9 0.99 0.71 0.6 0.49 0.37];
+sig_ss = [1.85 0.99 0.71 0.6 0.49 0.37];
 sig_T = zeros(size(sig_ss)); 
 mu_T = zeros(size(sig_ss)); 
 for ii = 1:length(T_all)
@@ -36,7 +36,7 @@ for ii = 1:length(T_all)
 end 
 
 % ratio between Taylor stress and shear modulus 
-r_param = mu_T(3)/G_298; 
+r_param = mu_T(4)/G_298; 
 clear A ii q q_1 q_2 sig_1 sig_2 sig_ss T 
 
 %% calculation for T=298 and edot=3e-5
@@ -47,12 +47,12 @@ hold on
 espan = [0 0.01]; 
 e = linspace(0,0.01,1000);
 
-c0 = 200; 
+c0 =500; 
 c1 = 1; 
 Kx = c0*exp(T_all/c1);
-K_pf = 3;
+K_pf = 5;
 % K_p = 1e5; 
-rho_ini = 1e-3; 
+rho_ini = 7e-3; 
 chi_ini = 0.15; 
 y0 = [0.0 rho_ini chi_ini];
 j=1;

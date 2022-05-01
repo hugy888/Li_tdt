@@ -9,7 +9,7 @@ function out = kclee(t,y,T,eps_dot,param)
     nu = param.nu; 
         
     q_0 = eps_dot*param.t_0; 
-    G_el = param.G_el;
+    G_el = mu_T/r;
     K_p = G_el/(K_pf*mu_T); 
     
     SIG = y(1); 
