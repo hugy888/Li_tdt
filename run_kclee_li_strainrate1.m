@@ -1,7 +1,7 @@
 clear all; %close all; 
 load('exp_data.mat')
 
-t_0 = 1e-12; 
+t_0 = 5e-11; 
 chi_0 = 0.25;
 
 % elastic properties
@@ -25,7 +25,7 @@ rho_ss = exp(-1/chi_0);
 % calculation at multiple T
 q = t_0*3e-5;
 % T_p=1.05*398*(-log(q)-1/(2*chi_0));
-T_p=15000;
+T_p=14500;
 T_all = [248 273 298 348 398]; 
 sig_ss = [0.99 0.71 0.6 0.49 0.37];
 sig_T = zeros(size(sig_ss)); 
@@ -36,7 +36,7 @@ for ii = 1:length(T_all)
 end 
 
 % ratio between Taylor stress and shear modulus 
-r_param = mu_T(3)/G_298; 
+% r_param = mu_T(3)/G_298; 
 
 
 clear A ii q q_1 q_2 sig_1 sig_2 sig_ss T 
@@ -53,12 +53,13 @@ espan = [0 0.25];
 e = linspace(0,0.25,1000);
 
 c0 = 1; 
-c1 = 50; 
-Kx = c0*exp(T_all/c1);
-K_pf = 5;
+c1 = 500; 
+% Kx = c0*exp(T/c1);
+Kx = 75;
+K_pf = 1;
 % K_p = 1e5; 
 rho_ini = 1e-3; 
-chi_ini = 0.22; 
+chi_ini = 0.2; 
 y0 = [0.0 rho_ini chi_ini];
 j=1;
 legend_list={'4e-5','3e-4','3e-3','2e-2'};
@@ -67,7 +68,7 @@ for ii=1:4
     s_exp = Li(~isnan(Li(:,2*ii+12)),2*ii+12);
 
     % mu_T(3) corresponds to T=298 K
-    param = struct('mu_T',mu_T(3),'Kx',Kx(3),'K_pf',K_pf,'t_0',t_0,'T_p',T_p,'chi_0',chi_0,'r',r_param,'nu',nu); 
+    param = struct('mu_T',mu_T(3),'Kx',Kx,'K_pf',K_pf,'t_0',t_0,'T_p',T_p,'chi_0',chi_0,'G_el',2.83e+3,'nu',nu); 
 
     sol = ode15s(@(t,y)kclee(t,y,298,srate(ii),param),espan,y0);
     s = deval(sol,e,j);
