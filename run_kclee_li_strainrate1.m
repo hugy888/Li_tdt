@@ -1,7 +1,7 @@
 clear all; %close all; 
 load('exp_data.mat')
 
-t_0 = 5e-11; 
+t_0 = 1e-12; 
 chi_0 = 0.25;
 
 % elastic properties
@@ -25,7 +25,7 @@ rho_ss = exp(-1/chi_0);
 % calculation at multiple T
 q = t_0*3e-5;
 % T_p=1.05*398*(-log(q)-1/(2*chi_0));
-T_p=14500;
+T_p=13000;
 T_all = [248 273 298 348 398]; 
 sig_ss = [0.99 0.71 0.6 0.49 0.37];
 sig_T = zeros(size(sig_ss)); 
